@@ -26,7 +26,7 @@ public class WaveGenerator : MonoBehaviour
         for (int i = 0; i < vertices.Length; i++)
         {
             Vector3 vertex = transform.TransformPoint(vertices[i]);
-            vertex.y = CalculateWaveHeight(vertex.x, vertex.z, Time.time);
+            vertex.y = CalculateWaveHeight.calculate(vertex.x, vertex.z);
             vertices[i] = transform.InverseTransformPoint(vertex);
         }
 
@@ -34,15 +34,5 @@ public class WaveGenerator : MonoBehaviour
         mesh.vertices = vertices;
         mesh.RecalculateNormals();
         meshCollider.sharedMesh = mesh;
-    }
-
-    // Calculate the Y coordinate based on the given X and Z coordinates using 3D wave function math
-    // Time is the offset, which makes the wave move
-    float CalculateWaveHeight(float x, float z, float time)
-    {
-        float waveAmplifier = 0.5f;
-        float speedAmplifier = 0.3f;
-        float waveHeight = Mathf.Sin((x + (time*speedAmplifier)) * waveAmplifier) * Mathf.Cos((z + (time*speedAmplifier)) * waveAmplifier);
-        return waveHeight;
     }
 }
